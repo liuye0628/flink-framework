@@ -1,0 +1,5 @@
+# Project exclude paths
+/flink-basic/target/
+/flink-project-gmall/target/
+/java-date_struct_alg/target/
+/java-grammar/target/

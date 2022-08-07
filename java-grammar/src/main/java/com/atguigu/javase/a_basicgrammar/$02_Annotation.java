@@ -5,6 +5,7 @@ package com.atguigu.javase.a_basicgrammar;
  */
 
 public class $02_Annotation {
+
     public static void main(String[] args){
 
         //单行注释

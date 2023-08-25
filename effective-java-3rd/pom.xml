@@ -2,19 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>flink-framework</artifactId>
+        <groupId>com.atguigu</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.atguigu</groupId>
-    <artifactId>flink-framework</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>java-grammar</module>
-        <module>java-date_struct_alg</module>
-        <module>flink-basic</module>
-        <module>flink-project-gmall</module>
-        <module>effective-java-3rd</module>
-    </modules>
+    <artifactId>effective-java-3rd</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

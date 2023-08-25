@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="chapter01" />
+        <module name="effective-java-3rd" />
         <module name="java-grammar" />
         <module name="flink-project-gmall" />
         <module name="flink-basic" />

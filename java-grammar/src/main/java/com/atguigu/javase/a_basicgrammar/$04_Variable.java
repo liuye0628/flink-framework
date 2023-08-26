@@ -40,7 +40,8 @@ public class $04_Variable {
         String path = "E:\\Idea\\io";
         System.out.println(path);
 
-        //char c2 ='\'';
+        char c2 ='\'';
+        System.out.println(c2);
         char c3 = 97;
         char c4 = '9';
         System.out.println(c3); //输出 a

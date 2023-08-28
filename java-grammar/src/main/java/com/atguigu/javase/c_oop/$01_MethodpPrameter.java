@@ -13,8 +13,8 @@ public class $01_MethodpPrameter {
 
     }
 
-    public static void basic(int i ){
-        i++;
+    public static int basic(int i ){
+        return i + 100;
     }
 
     public static void referEnce(int[] arr){

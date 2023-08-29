@@ -17,7 +17,7 @@ public class $04_Var_Scope {
         int b;
         //System.out.println(b);---->局部变量必须赋值后才能使用,因为没有默认值
         int a = 10;
-        //int a = 100;------>在同一个作用雨中,两个局部变量不能重名
+        //int a = 100;------>在同一个作用域中,两个局部变量不能重名
         //public int d = 66;------>局部变量不可以加修饰符
         System.out.println(a);//局部变量可以和全局变量重名,访问时遵循就近原则
     }

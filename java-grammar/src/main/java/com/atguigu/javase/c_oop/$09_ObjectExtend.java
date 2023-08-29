@@ -27,6 +27,7 @@ class Animal{
     private int age = 6;
     private String name = "animal";
     private String address = "深圳";
+    int id = 0;
 
     public void call(){
         System.out.println("动物会叫");
@@ -59,6 +60,7 @@ class Animal{
 class Dog extends Animal{
     private String color = "white";
     private String address = "广州";
+    int id = 1;
 
 
 
@@ -73,6 +75,9 @@ class Dog extends Animal{
     public void call(){
         super.call();//super代表父类的引用,用于访问父类的属性,方法,构造器,但不能访问父类中private修饰的属性和方法,在构造中使用super()无论是有参还是无参,都要放在第一行,且只能出现一句
         System.out.println("汪汪汪");
+    }
+    public void sleep(){
+        System.out.println("呼呼呼");
     }
 
     public String getColor() {

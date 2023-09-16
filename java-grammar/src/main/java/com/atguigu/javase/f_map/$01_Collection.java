@@ -7,6 +7,7 @@ import java.util.Collection;
 
 /**
  *Collection:相关api
+ * Collection:表示一组对象,这些对象也称为collection的元素
  */
 public class $01_Collection {
     public static void main(String[] args) {
@@ -17,13 +18,17 @@ public class $01_Collection {
         Collection<Object> coll = new ArrayList<>();
         coll.add(1);
         coll.add(2);
+        coll.add(3);
         System.out.println("coll集合元素个数:"+coll.size());//add(Object j):添加元素对象到集合中
         Collection other = new ArrayList();
         other.add(1);
         other.add(2);
-        other.add(3);
+        other.add(4);
+
         //coll.add(other);
         coll.addAll(other);//addAll(Collection other):添加other集合中的所有元素对象到当前集合中
+        System.out.println("coll集合元素个数:"+coll.size());
+        coll.retainAll(other);//retainAll(Collection other):保留交集
         System.out.println("coll集合元素个数:"+coll.size());
 
     }

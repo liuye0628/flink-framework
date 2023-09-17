@@ -7,7 +7,8 @@ import java.util.Collection;
 
 /**
  *Collection:相关api
- * Collection:表示一组对象,这些对象也称为collection的元素
+ * Collection:表示一组对象,这些对象也称为collection的元素,jdk不提供此接口的任何直接实现,它提供更具体的子接口(如set,list,queue)实现
+ * Collection是所有单列集合的父接口
  */
 public class $01_Collection {
     public static void main(String[] args) {

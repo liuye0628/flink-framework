@@ -1,5 +1,7 @@
 package com.atguigu.javase.d_api;
 
+import org.junit.Test;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
@@ -11,17 +13,25 @@ import java.util.TimeZone;
 
 //日期时间API
 public class $08_Date {
-    public static void main(String[] args) throws ParseException {
-        /**
-         * java.util.Date
-         */
-         Date date = new Date();
+
+    /**
+     * java.util.Date
+     */
+    @Test
+    public void myDate(){
+
+        Date date = new Date();
         System.out.println(date);//Wed Sep 13 20:10:42 CST 2023
         System.out.println(date.getTime());//1694607080010
         System.out.println(System.currentTimeMillis());//1694607157115(打印系统当前时间)
-        /**
-         * java.util.Calendar:抽象类,为特定时间如"Year","Month","Hour"等日历字段之间的转换提供了一些方法
-         */
+
+    }
+    /**
+     * java.util.Calendar:抽象类,为特定时间如"Year","Month","Hour"等日历字段之间的转换提供了一些方法
+     */
+    @Test
+    public void myCalendar(){
+
         Calendar calendar = Calendar.getInstance();
         System.out.println(calendar);//java.util.GregorianCalendar[time=1694607403446,areFieldsSet=true,areAllFieldsSet=true,lenient=true,zone=sun.util.calendar.ZoneInfo[id="Asia/Shanghai",offset=28800000,dstSavings=0,useDaylight=false,transitions=19,lastRule=null],firstDayOfWeek=1,minimalDaysInFirstWeek=1,ERA=1,YEAR=2023,MONTH=8,WEEK_OF_YEAR=37,WEEK_OF_MONTH=3,DAY_OF_MONTH=13,DAY_OF_YEAR=256,DAY_OF_WEEK=4,DAY_OF_WEEK_IN_MONTH=2,AM_PM=1,HOUR=8,HOUR_OF_DAY=20,MINUTE=16,SECOND=43,MILLISECOND=446,ZONE_OFFSET=28800000,DST_OFFSET=0]
         int year = calendar.get(Calendar.YEAR);
@@ -31,9 +41,13 @@ public class $08_Date {
         TimeZone t = TimeZone.getTimeZone("America/Los_Angeles");
         Calendar c1 = Calendar.getInstance(t);
         System.out.println(c1);
-        /**
-         * java.text.SimpleDateFormat:用于对日期时间的格式化
-         */
+    }
+    /**
+     * java.text.SimpleDateFormat:用于对日期时间的格式化
+     */
+    @Test
+    public void mySdf() throws ParseException {
+
         Date date1 = new Date();
         SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
         String str = sf.format(date1);
@@ -42,9 +56,13 @@ public class $08_Date {
         SimpleDateFormat sf1 = new SimpleDateFormat("yyyy年MM月dd日");
         Date date2 = sf1.parse(str1);
         System.out.println(date2);
-        /**
-         * JDK8后日期类:**********常用*********
-         */
+    }
+    /**
+     * JDK8后日期类:**********常用*********
+     */
+    @Test
+    public void myLocalDate(){
+
         LocalDate localDate = LocalDate.now();//now():根据当前时间创建对象
         System.out.println(localDate);
         LocalTime localTime = LocalTime.now();
@@ -56,27 +74,35 @@ public class $08_Date {
         System.out.println(localDate1.getDayOfYear());//getDayOfYear/getDayOfMonth:获取年份天数(1-366)/获取年份天数(1-31)
         System.out.println(localDate1.plusDays(2));//plusDays:向当前对象添加几天
         System.out.println(localDate1.minusDays(2));//minusDays:向当前对象减少几天
-        /**
-         * 指定时区日期时间:ZonedDateTime
-         */
+    }
+    /**
+     * 指定时区日期时间:ZonedDateTime
+     */
+    @Test
+    public void myZDT(){
+
         ZonedDateTime zonedDateTime = ZonedDateTime.now();
         System.out.println(zonedDateTime);
         ZonedDateTime zonedDateTime1= ZonedDateTime.now(ZoneId.of("America/New_York"));
         System.out.println(zonedDateTime1);
-        /**
-         * 持续日期/时间Period和Duration
-         */
-        LocalDate localDate2 = LocalDate.now();
-        LocalDate localDate3 = LocalDate.of(2021, 9, 12);
-        Period between = Period.between(localDate3, localDate2);//Period:用于计算两个日期间隔
+    }
+    /**
+     * 持续日期/时间Period和Duration
+     */
+    @Test
+    public void myPeriodAndDuration(){
+        LocalDate localDate1 = LocalDate.now();
+        LocalDate localDate2 = LocalDate.of(2022, 12, 3);
+        Period between = Period.between(localDate2, localDate1);//Period:用于计算两个日期间隔
         System.out.println(between);
         System.out.println("相差的年数："+between.getYears());
         System.out.println("相差的月数："+between.getMonths());
         System.out.println("相差的天数："+between.getDays());
-        System.out.println("相差的总数："+between.toTotalMonths());
+        System.out.println("相差的总月数："+between.toTotalMonths());
+
 
         LocalDateTime localDateTime1 = LocalDateTime.now();
-        LocalDateTime localDateTime2 = LocalDateTime.of(2019, 9, 12, 0, 0, 0, 0);
+        LocalDateTime localDateTime2 = LocalDateTime.of(2022, 12, 3, 0, 0, 0, 0);
         Duration between1 = Duration.between(localDateTime2, localDateTime1);//Duration:用于计算两个时间 间隔
         System.out.println("相差的总天数："+between1.toDays());
         System.out.println("相差的总小时数："+between1.toHours());
@@ -85,9 +111,13 @@ public class $08_Date {
         System.out.println("相差的总毫秒数："+between1.toMillis());
         System.out.println("相差的总纳秒数："+between1.toNanos());
         System.out.println("不够一秒的纳秒数："+between1.getNano());
-        /**
-         * DateTimeFormatter:日期时间格式化
-         */
+
+    }
+    /**
+     * DateTimeFormatter:日期时间格式化
+     */
+    @Test
+    public void myDateTimeFormatter(){
         DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyy.MM.dd");//创建格式化对象
         LocalDate parse = LocalDate.parse("2019.12.12", pattern);//解析操作
         System.out.println(parse);
@@ -101,8 +131,6 @@ public class $08_Date {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.LONG);
         String format2 = dateTimeFormatter.format(localDateTime3);//本地化相关的形式
         System.out.println(format2);
-
-
     }
 
 }

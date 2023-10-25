@@ -13,8 +13,5 @@
         <module name="flink-basic" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="chapter02" target="8" />
-    </bytecodeTargetLevel>
   </component>
 </project>

@@ -9,6 +9,8 @@ import java.util.Collection;
  *          for(元素的数据类型 变量 : Collection集合or数组){
  *              //写操作代码
  *          }
+ *  foreach本质上是使用iterator迭代器进行遍历的,可以在第29行打断点,使用单步调试进入代码,发现foreach本质是调用集合的iterator()方法
+ *  返回一个迭代器进行迭代的
  */
 public class $03_Foreach {
     public static void main(String[] args) {
@@ -26,7 +28,13 @@ public class $03_Foreach {
         coll.add("一目连");
         //使用增强for遍历集合
         for (String s : coll) {//s 代表集合中的每个元素
-            System.out.print(s+"\t");
+            System.out.print(s+"\t");//遍历的时候不能使用Collection的remove()方法,否则会报异常
         }
     }
+
+    /*
+    java.lang.Iterable接口
+    实现这个接口允许对象成为"foreach"语句的目标
+    Java5时Collection接口继承了Iterable接口,因此Collection系列的集合就可以使用forEach遍历
+     */
 }

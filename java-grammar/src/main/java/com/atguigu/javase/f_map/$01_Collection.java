@@ -8,7 +8,16 @@ import java.util.Collection;
 /**
  *Collection:相关api
  * Collection:表示一组对象,这些对象也称为collection的元素,jdk不提供此接口的任何直接实现,它提供更具体的子接口(如set,list,queue)实现
- * Collection是所有单列集合的父接口
+ * Collection是所有单列集合的父接口(集合根接口,存储一组对象)
+ *     一. List:接口特点是元素可重复,有序(存取顺序一致)
+ *          ①ArrayList:底层结构为数组,查询快,增删慢,线程不安全
+ *          ②LinkedList:底层结构为链表,查询慢,增删快
+ *          ③Vector:底层结构是数组,线程安全,效率低,不推荐使用
+ *     二.Set:接口特点是元素唯一
+ *          ①HashSet:底层结构是Hash表,查询和增删效率都高
+ *          ②LinkedHashSet:底层结构为Hash表+链表,链表保证元素的有序
+ *          ③TreeSet:底层结构是红黑树,查询效率高于链表,增删效率高于数组,元素实现排序
+ *
  */
 public class $01_Collection {
     public static void main(String[] args) {

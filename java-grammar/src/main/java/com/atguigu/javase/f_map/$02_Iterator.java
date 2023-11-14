@@ -23,7 +23,7 @@ public class $02_Iterator {
         list.add("齐天大圣");
         list.add("猪八戒");
         //使用迭代器遍历,每个集合对象都有自己的迭代器
-        Iterator<String> iterator = list.iterator();
+        Iterator<String> iterator = list.iterator();// public Iterator iterator():获取集合对应的迭代器,用来遍历集合中的元素
         while(iterator.hasNext()){//判断是否存在迭代元素
             String next = iterator.next();
             System.out.println(next);

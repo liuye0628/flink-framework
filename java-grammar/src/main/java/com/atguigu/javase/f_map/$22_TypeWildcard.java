@@ -1,29 +1,32 @@
-package com.atguigu.javase.c_oop;
+package com.atguigu.javase.f_map;
+
+
+import java.util.List;
+
 /**
- *  面向对象特性:继承
- *      基本介绍:继承可以解决代码复用,让我们的编程更加靠近人类思维,当多个类存在相同的属性和方法时,可以从这些类中抽象出父类
- *      ,在父类中定义这些相同的属性和方法,所有的子类不需要重新定义这些属性和方法,只需要通过extends来声明继承父类即可
+ * 类型通配符: 当我们声明一个变量/形参时,这个变量或形参的类型是泛型类或泛型接口,例如:Comparator类型,但是我们仍然无法确定这个泛型类或泛型接口的类型变量
+ * <T>的具体类型,此时我们考虑使用类型通配符
  */
-public class $09_ObjectExtend {
-    public static void main(String[] args) {
-        //1.子类和父类中的成员变量不重名
-        Animal animal = new Animal();
-        System.out.println(animal.getAge());//如果new的是父类,只能调用父类自己的成员变量
-        Dog dog = new Dog();
-        System.out.println(dog.getAge());//如果new的是子类,既能调用自己的,还能调用父类中继承过来的
-        System.out.println(dog.getColor());
-        //2.子类和父类中的成员变量重名
-        System.out.println(animal.getAddress());//如果是父类对象,调用父类中的成员变量
-        System.out.println(dog.getAddress());//如果是子类的,调用的是子类的成员变量
-        animal.call();
-        dog.call();
-
+public class $22_TypeWildcard {
+    //表示此方法可以接受一个泛型是<Animal>或者List<Animal的子类型>的List集合
+    //<? extends 上限> -> 用于设定通配符上限
+    public static void forList(List<? extends Animal> list){
+        for (Animal animal : list) {
+            System.out.println(animal);
+        }
     }
-
+    //表示此方法可以接受一个泛型是<Animal>或者List<Animal的父类型>的List集合
+    //<? super 下限> -> 用于设定通配符下限
+    public static void ForList(List<? super Animal> list){
+        for (Object o : list) {
+            System.out.println(o);
+        }
+    }
 }
 
 
- class Animal{
+
+class Animal{
     private int age = 6;
     private String name = "animal";
     private String address = "深圳";
@@ -57,7 +60,7 @@ public class $09_ObjectExtend {
         this.address = address;
     }
 }
-class Dog extends Animal{
+class Dog extends Animal {
     private String color = "white";
     private String address = "广州";
     int id = 1;

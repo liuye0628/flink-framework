@@ -15,6 +15,24 @@ public class $02_ThreadCreation {
         for (int i = 0; i < 10; i++){
             System.out.println("main线程! "+ i);
         }
+        System.out.println("--------------------------------------");
+        /*
+        方式二:实现Runnable接口
+         */
+        MyRunnable mr = new MyRunnable();//创建自定义类对象 线程任务对象
+        Thread t = new Thread(mr, "mr");
+        t.start();
+        /*
+        方式三:使用匿名内部类对象
+         */
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 10; i++){
+                    System.out.println(Thread.currentThread().getName() + " " + i);
+                }
+            }
+        }).start();
 
     }
 }
@@ -50,3 +68,27 @@ class MyThread extends Thread{
         }
     }
 }
+
+/**
+ * 方式二:实现Runnable接口
+ * Java有单继承的限制,当我们无法继承Thread类时,那么该如何做呢?在核心类库中提供了Runnable接口,我们可以实现Runnable接口,重写run()方法,
+ * 然后再通过Thread类的对象代理启动和执行我们的线程体run()方法,通过实现Runnable接口创建线程并启动的步骤
+ *      ①定义实现Runnable接口的实现类,并重写该接口的run()方法,该run()方法的方法体同样是该线程的线程执行体
+ *      ②创建Runnable实现类的实例,并以此实例作为Thread的target来创建Thread对象,该Thread对象才是真正的线程对象
+ *      ③调用线程对象的start()方法来启动线程
+ */
+class MyRunnable implements Runnable{
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i++){
+            System.out.println(Thread.currentThread().getName() + " " + i);
+        }
+    }
+}
+
+/**
+ * 两种创建线程方式比较
+ *      ①Thread类本身也是实现了Runnable接口的,run()方法都来自Runnable接口,run()方法也是真正要执行的线程任务
+ *      ②因为Java类是单继承的,所以继承Thread的方式有单继承的局限性,但是使用上更简单一些
+ *      ③实现Runnable接口的方式,避免了单继承的局限性,并且可以使多个线程对象共享一个Runnable实现类(线程任务类)对象,从而方便在多线程任务执行时共享数据
+ */

@@ -9,9 +9,35 @@ package com.atguigu.javase.e_multithreading;
  *  * 要求:只要兔子和乌龟中有人到达终点,就宣布比赛结束,没到达终点的也停下来
  *  */
 
+/**
+ * volatile的作用是确保不会因编译器的优化而省略某些指令,volatile的变量是说这变量可能会被意想不到的改变,每次都小心的重新读取该变量的值,而不是使用保存
+ * 在寄存器中的备份,这样编译器就不会假设这个变量的值了
+ */
+
 public class $06_ThreadDemo3 {
     public static void main(String[] args) {
-
+        Thread.currentThread().setPriority(Thread.MAX_PRIORITY);
+        Player rabbit = new Player("兔子", 100, 10000, 30);
+        Player turtoise = new Player("乌龟", 1000, 1000, 30);
+        rabbit.start();
+        turtoise.start();
+        while(true){
+            if(rabbit.isEnded() || turtoise.isEnded()){
+                rabbit.setFlag(false);
+                turtoise.setFlag(false);
+                rabbit.interrupt();//中断休眠
+                turtoise.interrupt();//中断休眠
+                break;
+            }
+        }
+        System.out.println("比赛结束");
+        if(rabbit.isEnded() && turtoise.isEnded()){
+            System.out.println("平局");
+        }else if(rabbit.isEnded()){
+            System.out.println("兔子赢");
+        }else{
+            System.out.println("乌龟赢");
+        }
     }
 }
 

@@ -19,6 +19,13 @@ public class $04_ThreadDemo1 {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            if(i == 5){
+                try {
+                    t.join();//当main线程打印到5之后,需要等join进来的线程停止后才会继续了
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 }

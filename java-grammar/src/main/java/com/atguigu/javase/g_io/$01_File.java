@@ -3,6 +3,7 @@ package com.atguigu.javase.g_io;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
@@ -167,9 +168,95 @@ public class $01_File {
  */
     @Test
     public void test06(){
+        File file = new File("io_demo");
+        System.out.println("递归打印多级目录");
+        listSubFiles(file);
+        System.out.println("递归打印该目录下所有的.java文件");
+        listByFileFilter(file);
+        System.out.println("递归求该目录的总大小");
+        getLength(file);
 
     }
 
+
+    /**
+     * ①递归打印多级目录
+     * @param file
+     */
+    public void listSubFiles(File file){
+        if (file!=null && file.isDirectory()){
+            File[] listFiles = file.listFiles();
+            if(listFiles!=null){
+                for (File listFile : listFiles) {
+                    listSubFiles(listFile);//递归调用
+                }
+            }
+        }
+        System.out.println(file);
+
+    }
+
+    /**
+     * ②递归打印某目录下(包括子目录)中所有满足条件的文件(例如:打印io_demo下的所有.java文件)
+     * @param file
+     */
+    public void listByFileFilter(File file){
+        if(file != null && file.isDirectory()){
+            File[] listFiles = file.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.endsWith(".java") || new File(dir, name).isDirectory();
+                }
+            });
+            if(listFiles!=null){
+                for (File sub : listFiles) {
+                    if(sub.isFile()){
+                        System.out.println(sub);
+                    }
+                    listByFileFilter(sub);
+                }
+
+            }
+        }
+
+    }
+
+    /**
+     * ③递归求目录总大小
+     * @param dir
+     */
+    public long getLength(File dir){
+        if(dir != null && dir.isDirectory()){
+            File[] files = dir.listFiles();
+            if(files!=null){
+                long sum = 0;
+                for (File file : files) {
+                    sum += getLength(file);
+                }
+                return sum;
+            }
+        }else if(dir != null && dir.isFile()){
+            return dir.length();
+        }
+        return 0;
+    }
+
+
+    /**
+     * ④递归删除非空目录
+     * @param dir
+     */
+    public void forceDeleteDir(File dir){
+        if(dir != null && dir.isDirectory()){
+            File[] files = dir.listFiles();
+            if(files!=null){
+                for (File file : files) {
+                    forceDeleteDir(file);
+                }
+            }
+        }
+        dir.delete();
+    }
 
 
 }

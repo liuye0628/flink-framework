@@ -4,7 +4,7 @@ package com.atguigu.javase.g_io;
  * IO概述
  */
 
-public class $02_IO {
+public class $02_Io {
 
     /**
      * 1.什么是io

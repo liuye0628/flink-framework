@@ -30,6 +30,9 @@ public class $05_PictureCopy {
         }
 
         //3.关闭资源
+        /**
+         * 流的关闭原则:先开后关,后开先关
+         */
         fos.close();
         fis.close();
 

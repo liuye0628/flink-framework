@@ -2,10 +2,7 @@ package com.atguigu.javase.g_io;
 
 import org.junit.Test;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 
 /**
  * 缓冲流,也叫高效流,按照数据类型分类
@@ -98,6 +95,60 @@ public class $08_BufferedStream {
         //记录结束时间
         long end = System.currentTimeMillis();
         System.out.println("缓冲流使用数组复制时间:"+(end - start)+"毫秒");//2毫秒
+    }
+
+
+    /**
+     * 字符缓冲流
+     * 1.构造方法:
+     * · public BufferedReader(Reader in): 创建一个新的缓冲输入流
+     * · public BufferedWriter(writer out): 创建一个新的缓冲输出流
+     */
+    public void test05() throws Exception{
+        //创建字符缓冲输入流
+        BufferedReader br = new BufferedReader(new FileReader("reader.txt"));
+        BufferedWriter bw = new BufferedWriter(new FileWriter("reader.txt"));
+    }
+
+    /**
+     * 字符缓冲流
+     * 2.特有方法
+     * 字符缓冲流的基本方法与普通字符流调用方式一致,不再阐述,我们来看它们具备的特有方法
+     * · BufferedReader: public String readLine(): 读一行文字
+     * · BufferedWriter: public void newLine(): 写一行行分隔符,由系统属性定义符号
+     * @throws Exception
+     */
+    @Test
+    public void test06() throws Exception{
+        /*
+        readLine()方法
+         */
+        //创建流对象
+        BufferedReader br = new BufferedReader(new FileReader("reader_demo.txt"));
+        //定义字符串,保存读取的一行文字
+        String line = null;
+        //循环读取,读取到最后返回null
+        while ((line = br.readLine())!=null){
+            System.out.println(line);
+            System.out.println("---------");
+        }
+        //释放资源
+        br.close();
+
+        /*
+        newLine()方法
+         */
+        //创建流对象
+        BufferedWriter bw = new BufferedWriter(new FileWriter("reader_demo.txt"));
+        //写出数据
+        bw.write("今天");
+        //写出换行
+        bw.newLine();
+        bw.write("星期");
+        bw.newLine();
+        bw.write("二");
+        bw.close();
+
     }
 
 }

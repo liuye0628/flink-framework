@@ -1,9 +1,6 @@
 package com.atguigu.javase.g_io;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 
 /**
  * 需求:将GBK编码的文本文件,转换为UDF-8编码的文本文件
@@ -11,10 +8,10 @@ import java.io.OutputStreamWriter;
  *      2.使用UTF-8编码的转换流,写出文本文件
  */
 public class $12_TransDemo {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
+        //TODO main()跑会报错, 放在测试方法不会报错
         InputStreamReader isr = new InputStreamReader(new FileInputStream("file_gbk.txt"),"GBK");//转换输入流,使用GBK编码
         OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("file_utf8.txt"));//转换输出流,默认utf-8编码
-
         //读写数据
         char[] cbuf = new char[1024];//定义数组
         int len;//定义长度

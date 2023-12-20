@@ -35,7 +35,7 @@ public class $14_ObjectStream {
      */
     static class Employee implements java.io.Serializable{
         //加入序列版本号
-        private static final long serialiVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
         public static String company = "xxx";
         public String name;
         public String address;

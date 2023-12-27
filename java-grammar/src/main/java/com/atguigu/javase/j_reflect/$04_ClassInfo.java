@@ -2,7 +2,9 @@ package com.atguigu.javase.j_reflect;
 
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
@@ -59,6 +61,66 @@ public class $04_ClassInfo {
          */
         Field valueField = clazz.getDeclaredField("value");
         System.out.println("valueField= "+valueField);
+        Field[] declaredFields = clazz.getDeclaredFields();
+        for (Field field : declaredFields) {
+            //修饰符,数据类型,属性名
+            int modifiers = field.getModifiers();
+            System.out.println("属性的修饰符: "+Modifier.toString(modifiers));
+            String name1 = field.getName();
+            System.out.println("属性名:"+name1);
+            Class<?> type = field.getType();
+            System.out.println("属性的数据类型:"+type);
+        }
+        System.out.println("-----------------");
+        /*
+        (7)构造器们
+         */
+        Constructor[] constructors = clazz.getDeclaredConstructors();
+        for (Constructor constructor : constructors) {
+            //修饰符,构造器名称,构造器形参列表,抛出异常列表
+            int modifiers = constructor.getModifiers();
+            System.out.println("构造器的修饰符: "+Modifier.toString(modifiers));
+            String name1 = constructor.getName();
+            System.out.println("构造器名: "+ name1);
+            //形参列表
+            System.out.println("形参列表: ");
+            Class[] parameterTypes = constructor.getParameterTypes();
+            for (Class parameterType : parameterTypes) {
+                System.out.println(parameterType);
+            }
+            //异常列表
+            System.out.println("异常列表:");
+            Class[] exceptionTypes = constructor.getExceptionTypes();
+            for (Class exceptionType : exceptionTypes) {
+                System.out.println(exceptionType);
+            }
+        }
+        System.out.println("--------------------");
+        /*
+        (8)方法们
+         */
+        Method[] declaredMethods = clazz.getDeclaredMethods();
+        for (Method method : declaredMethods) {
+            //修饰符,返回值类型,方法名,形参列表,异常列表
+            int modifiers = method.getModifiers();
+            System.out.println("方法的修饰符: "+Modifier.toString(modifiers));
+            Class<?> returnType = method.getReturnType();
+            System.out.println("返回值类型: "+returnType);
+            String name1 = method.getName();
+            System.out.println("方法名: "+name1);
+            //形参列表
+            System.out.println("形参列表: ");
+            Class<?>[] parameterTypes = method.getParameterTypes();
+            for (Class<?> parameterType : parameterTypes) {
+                System.out.println(parameterType);
+            }
+            //异常列表
+            System.out.println("异常列表: ");
+            Class<?>[] exceptionTypes = method.getExceptionTypes();
+            for (Class<?> exceptionType : exceptionTypes) {
+                System.out.println(exceptionType);
+            }
+        }
     }
 
 }

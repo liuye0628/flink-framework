@@ -1,5 +1,12 @@
 package com.atguigu.javase.i_socket;
 
+import org.junit.Test;
+
+import java.io.*;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Scanner;
+
 /**
  * 1.通信的两端都要有Socket(也可以叫"套接字"),是两台机器间通信的端点,网络通信其实就是Socket间的通信,Socket可以分为:
  * ·流套接字(stream socket):使用TCP提供可依赖的字节流服务
@@ -44,4 +51,172 @@ package com.atguigu.javase.i_socket;
  *
  */
 public class $03_Socket {
+    /**
+     * 示例一:单个客户端与服务端单次通信
+     */
+    /**
+     * 客户端示例代码
+     */
+    @Test
+    public void client() throws IOException {
+        //1.准备socket,连接服务器,需要指定连接服务器的IP地址和端口号
+        Socket socket = new Socket("127.0.0.1", 8888);
+        //2.获取输出流,用来发送消息给服务器
+        OutputStream out = socket.getOutputStream();
+        //发送数据
+        out.write("星期天".getBytes());
+        //会在流的末尾加入一个"流的末尾"标记,对方才能读到-1,否则对方的读取方法会一致阻塞
+        socket.shutdownOutput();
+        //3.获取输入流,用来接收服务器发送给客户端的数据
+        InputStream input = socket.getInputStream();
+        //接收数据
+        byte[] data = new byte[1024];
+        StringBuilder s = new StringBuilder();
+        int len;
+        while((len = input.read(data))!=-1){
+            s.append(new String(data,0,len));
+        }
+        System.out.println("服务器返回的消息是:"+s);
+        //4.关闭socket,不再与服务器通信,即断开与服务器的连接
+        //socket关闭,意味着InputStream与OutputStream也关闭了
+        socket.close();
+    }
+
+
+    /**
+     * 服务器端示例代码
+     */
+    @Test
+    public void server() throws IOException {
+        //1.准备一个ServerSocket对象,并绑定8888端口
+        ServerSocket server = new ServerSocket(8888);
+        System.out.println("等待连接....");
+        //2.在8888端口监听客户端的连接,该方法是个阻塞的方法,如果没有客户端连接,将一直阻塞
+        Socket socket = server.accept();
+        System.out.println("一个客户端连接成功!");
+        //3.获取输入流,用来接收该客户端发送给服务器的数据
+        InputStream input = socket.getInputStream();
+        //接收数据
+        byte[] data = new byte[1024];
+        StringBuilder s = new StringBuilder();
+        int len;
+        while((len = input.read(data))!=-1){
+            s.append(new String(data,0,len));
+        }
+        System.out.println("客户端发送的消息是:"+s);
+        //4.获取输出流,用来发送数据给该客户端
+        OutputStream out = socket.getOutputStream();
+        //发送数据
+        out.write("欢迎登录".getBytes());
+        out.flush();
+        //5.关闭socket,不再与该客户端通信
+        //socket关闭,意味着InputStream和OutputStream也关闭了
+        socket.close();
+        //6.如果不再接收任何客户端通信,可以关闭ServerSocket
+        server.close();
+    }
+
+
+    /**
+     * 示例二:多个客户端与服务器之间的多次通信
+     * 通常情况下,服务器不应该只接受一个客户端请求,而应该不断的接受来自客户端的所有请求,所以Java程序通常会通过循环,不断的调用ServerSocket的accept()方法
+     * 如果服务器端要同时处理多个客户端请求,因此服务器端需要为每一个客户端单独分配一个线程来处理,否则,无法实现同时
+     * 之前学习IO流的时候,提到过装饰着设计模式,该设计使得不管底层IO流是怎样的节点流:文件流也好,网络Socket产生的流也好,程序都可以将其包装成处理流,甚至可以多层
+     * 包装,从而提供更多方便的处理
+     * 案例需求:多个客户端连接服务器,并进行多次通信
+     *  ·每个客户端连接成功后,从键盘输入英文单词或中国成语,并发送给服务器
+     *  ·服务器收到客户端的消息后,把词语"反转"后返回给客户端
+     *  ·客户端接收服务器返回的"词语",打印显示
+     *  ·当客户端输入"stop"时,断开与服务器的连接
+     *  ·多个客户端可以同时给服务器"发送词语",服务器可以同时处理多个客户端的请求
+     */
+
+    /**
+     * 客户端示例代码二
+     */
+    @Test
+    public void client2() throws IOException {
+        //1.准备socket,连接服务器,需要指定服务器的IP地址和端口号
+        Socket socket = new Socket("127.0.0.1", 8888);
+        //2.获取输出流,用来发送数据给服务器
+        OutputStream out = socket.getOutputStream();
+        PrintStream ps = new PrintStream(out);
+        //3.获取输入流,用来接收服务器发送给该客户端的数据
+        InputStream input = socket.getInputStream();
+        BufferedReader br = new BufferedReader(new InputStreamReader(input));
+        Scanner scanner = new Scanner(System.in);
+        while(true){
+            System.out.println("输入发送给服务器的单词或词语:");
+            String message = scanner.nextLine();
+            if(message.equals("stop")){
+                socket.shutdownOutput();
+                break;
+            }
+            //4.发送数据
+            ps.println(message);
+            //接收数据
+            String feedback = br.readLine();
+            System.out.println("从服务器收到的反馈是:"+feedback);
+        }
+        //5.关闭socket,断开与服务器的连接
+        scanner.close();
+        socket.close();
+
+    }
+
+    /**
+     * 服务器端示例代码二
+     */
+    @Test
+    public void server2() throws IOException {
+        //1.准备一个ServerSocket
+        ServerSocket server = new ServerSocket(8888);
+        System.out.println("等待连接...");
+        int count = 0;
+        while(true){
+            //2.监听一个客户端的连接
+            Socket socket = server.accept();
+            System.out.println("第"+ ++count + "个客户端" + socket.getInetAddress().getHostAddress()+"连接成功!!");
+            ClientHandlerThread ct = new ClientHandlerThread(socket);
+            ct.start();
+        }
+        //这里没有关闭Server,永远监听
+    }
+
+    static class ClientHandlerThread extends Thread{
+        private Socket socket;
+        public ClientHandlerThread(Socket socket){
+            super();
+            this.socket = socket;
+        }
+
+        @Override
+        public void run() {
+            try {
+                //(1)获取输入流,用来接收客户端发送给服务器的数据
+                BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                //(2)获取输出流,用来发送数据给该客户端
+                PrintStream ps = new PrintStream(socket.getOutputStream());
+                String str;
+                //(3)接收数据
+                while((str = br.readLine())!=null){
+                    //(4)反转
+                    StringBuilder word = new StringBuilder(str);
+                    word.reverse();
+                    //(5)返回给客户端
+                    ps.println(word);
+                }
+                System.out.println(socket.getInetAddress().getHostAddress()+"正常退出");
+            } catch (IOException e) {
+                System.out.println(socket.getInetAddress().getHostAddress()+"意外退出");
+            } finally {
+                try {
+                    //(6)断开连接
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
